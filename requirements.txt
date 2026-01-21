@@ -1,0 +1,7 @@
+cryptography>=46.0.3
+email-validator>=2.3.0
+fastapi>=0.128.0
+pymysql>=1.1.2
+python-dotenv>=1.2.1
+sqlalchemy>=2.0.45
+uvicorn
