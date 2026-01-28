@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, BackgroundTasks, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from app.schemas import ContactForm
@@ -10,6 +11,14 @@ from app.deps import get_db
 app = FastAPI(
     title="Uplife Contact API",
     version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://liveuplife.com"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.post("/contact")
