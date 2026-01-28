@@ -1,3 +1,4 @@
+import logging
 from fastapi import FastAPI, HTTPException, BackgroundTasks, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -8,10 +9,15 @@ from app.database import Base, engine
 from app.models import Contact
 from app.deps import get_db
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 app = FastAPI(
     title="Uplife Contact API",
     version="1.0.0"
 )
+
+Base.metadata.create_all(bind=engine)
 
 app.add_middleware(
     CORSMiddleware,
@@ -53,8 +59,9 @@ def contact_form(
         }
 
     except Exception as e:
+        logger.error(f"Contact form error: {e}")
         db.rollback()
         raise HTTPException(
             status_code=500,
-            detail="Failed to process contact form",
+            detail=f"Failed to process contact form: {str(e)}",
         )
