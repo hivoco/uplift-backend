@@ -2,3 +2,6 @@
 venv/
 __pycache__/
 *.pyc
+app/uploads/
+cms/node_modules/
+cms/dist/
